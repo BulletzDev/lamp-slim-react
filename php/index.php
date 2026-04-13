@@ -15,4 +15,10 @@ $app->post('/alunni','AlunniController:create');
 $app->put('/alunni/{id}','AlunniController:update');
 $app->delete('/alunni/{id}','AlunniController:destroy');
 
+$app->get('/cert', 'CertificazioniController:display');
+$app->get('/cert/{id}','CertificazioniController:show');
+$app->post('/cert','CertificazioniController:create');
+$app->put('/cert/{id}','CertificazioniController:update');
+$app->delete('/cert/{id}','CertificazioniController:destroy');
+
 $app->run();
