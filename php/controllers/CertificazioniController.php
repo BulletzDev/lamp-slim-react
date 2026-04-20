@@ -56,23 +56,23 @@ class CertificazioniController
 
   public function create(Request $request, Response $response, $args){
     $data = $this->getRequestData($request);
-    $alid = isset($data['alunno_id']) ? trim($data['alunno_id']) : '';
+    $certificazione_id = isset($data['certificazione_id']) ? trim($data['certificazione_id']) : '';
     $titolo = isset($data['titolo']) ? trim($data['titolo']) : '';
     $votazione = isset($data['votazione']) ? trim($data['votazione']) : '';
     $ente = isset($data['ente']) ? trim($data['ente']) : '';
 
-    if ($alid === '' || $titolo === ''||$votazione === ''|| $ente === '') {
+    if ($certificazione_id === '' || $titolo === '' || $votazione === '' || $ente === '') {
       $response->getBody()->write(json_encode(['error' => 'Missing data']));
       return $response->withHeader("Content-type", "application/json")->withStatus(400);
     }
 
     $mysqli_connection = new MySQLi('my_mariadb', 'root', 'ciccio', 'scuola');
-    $alid = $mysqli_connection->real_escape_string($alid);
+    $certificazione_id = $mysqli_connection->real_escape_string($certificazione_id);
     $titolo = $mysqli_connection->real_escape_string($titolo);
     $votazione = $mysqli_connection->real_escape_string($votazione);
     $ente = $mysqli_connection->real_escape_string($ente);
 
-    $result = $mysqli_connection->query("INSERT INTO certificazioni (alunno_id, titolo, votazione, ente) VALUES ('$alid', '$titolo','$votazione','$ente')");
+    $result = $mysqli_connection->query("INSERT INTO certificazioni (certificazione_id, titolo, votazione, ente) VALUES ('$certificazione_id', '$titolo','$votazione','$ente')");
     
     if($result){
       return $response->withHeader("Content-type", "application/json")->withStatus(201);
@@ -84,23 +84,23 @@ class CertificazioniController
   public function update(Request $request, Response $response, $args){
     $id = isset($args['id']) ? intval($args['id']) : 0;
     $data = $this->getRequestData($request);
-    $alid = isset($data['alunno_id']) ? trim($data['alunno_id']) : '';
+    $certificazione_id = isset($data['certificazione_id']) ? trim($data['certificazione_id']) : '';
     $titolo = isset($data['titolo']) ? trim($data['titolo']) : '';
     $votazione = isset($data['votazione']) ? trim($data['votazione']) : '';
     $ente = isset($data['ente']) ? trim($data['ente']) : '';
 
-    if ($id <= 0 || $alid === '' || $titolo === '' || $votazione === '' || $ente === '') {
+    if ($id <= 0 || $certificazione_id === '' || $titolo === '' || $votazione === '' || $ente === '') {
       $response->getBody()->write(json_encode(['error' => 'Invalid id or missing fields']));
       return $response->withHeader("Content-type", "application/json")->withStatus(400);
     }
 
     $mysqli_connection = new MySQLi('my_mariadb', 'root', 'ciccio', 'scuola');
-    $alid = $mysqli_connection->real_escape_string($alid);
+    $certificazione_id = $mysqli_connection->real_escape_string($certificazione_id);
     $titolo = $mysqli_connection->real_escape_string($titolo);
     $votazione = $mysqli_connection->real_escape_string($votazione);
     $ente = $mysqli_connection->real_escape_string($ente);
 
-    $result = $mysqli_connection->query("UPDATE certificazioni SET alunno_id='$alid', titolo='$titolo', votazione='$votazione', ente='$ente' WHERE id=$id");
+    $result = $mysqli_connection->query("UPDATE certificazioni SET certificazione_id='$certificazione_id', titolo='$titolo', votazione='$votazione', ente='$ente' WHERE id=$id");
     
     if($result){
       $response->getBody()->write(json_encode(['message' => 'Updated']));
